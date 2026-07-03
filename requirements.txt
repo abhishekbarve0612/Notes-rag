@@ -5,3 +5,4 @@ numpy>=1.26
 google-generativeai>=0.7     # gemini (optional)
 httpx>=0.27                  # openrouter (optional)
 pytest>=8.2
+anthropic
