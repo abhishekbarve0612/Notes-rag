@@ -37,7 +37,7 @@ class GeminiEmbedder:
         if not settings.gemini_api_key:
             raise ValueError("EMBEDDING_PROVIDER=gemini but GEMINI_API_KEY not set")
         genai.configure(api_key=settings.gemini_api_key)
-        self._genai, self._model, self.dim = genai, settings.gemini_chat_model, 768
+        self._genai, self._model, self.dim = genai, settings.gemini_embed_model, 3072
 
     def embed(self, texts: list[str]) -> np.ndarray:
         out = [

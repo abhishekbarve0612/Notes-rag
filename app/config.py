@@ -8,10 +8,10 @@ class Settings(BaseSettings):
 
     local_embed_model: str = "sentence-transformers/all-MiniLM-L6-v2" # 384 dim
     openai_embed_model: str = "text-embedding-3-small" # 1536 dim
-    gemini_embed_model: str = "models/text-embedding-004" # 768 dim
+    gemini_embed_model: str = "models/gemini-embedding-001" # 768 dim
 
     openai_chat_model: str = "gpt-4.1-nano"
-    gemini_chat_model: str = "gemini-2.5-flash-lite"
+    gemini_chat_model: str = "gemini-3.1-flash-lite"
     anthropic_chat_model: str = "claude-haiku-4-5"
     reranker_model: str = "cross-encoder/ms-macro-MiniLM-L-6-v2"
 
