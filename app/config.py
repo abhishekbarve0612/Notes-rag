@@ -4,7 +4,8 @@ from pydantic_settings import  BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     embedder: Literal["local", "openai", "gemini", "fake"] = "local"
-    llm: Literal["openai", "anthropic", "gemini", "fake"] = "fake"
+    llm: Literal["openai", "anthropic", "gemini", "fake"] = "openai"
+    reranker: Literal["cross-encoder", "noop"] = "cross-encoder"
 
     local_embed_model: str = "sentence-transformers/all-MiniLM-L6-v2" # 384 dim
     openai_embed_model: str = "text-embedding-3-small" # 1536 dim
@@ -13,7 +14,7 @@ class Settings(BaseSettings):
     openai_chat_model: str = "gpt-4.1-nano"
     gemini_chat_model: str = "gemini-3.1-flash-lite"
     anthropic_chat_model: str = "claude-haiku-4-5"
-    reranker_model: str = "cross-encoder/ms-macro-MiniLM-L-6-v2"
+    reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
     gemini_api_key: str = ""
     openai_api_key: str = ""
