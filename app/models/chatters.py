@@ -1,4 +1,5 @@
 from app.config import Settings
+from app.utils.retry import llm_retry
 
 
 class OpenAIChatter:
@@ -10,6 +11,7 @@ class OpenAIChatter:
         self._client = OpenAI(api_key=settings.openai_api_key)
         self._model = settings.openai_chat_model
 
+    @llm_retry
     def answer(self, prompt: str) -> str:
         response = self._client.chat.completions.create(
             model=self._model,
@@ -28,6 +30,7 @@ class AnthropicChatter:
         self._client = Anthropic(api_key=settings.anthropic_api_key)
         self._model = settings.anthropic_chat_model
 
+    @llm_retry
     def answer(self, prompt: str) -> str:
         r = self._client.messages.create(
             model=self._model, max_tokens=1024,
@@ -42,6 +45,7 @@ class GeminiChatter:
         genai.configure(api_key=settings.gemini_api_key)
         self._model = genai.GenerativeModel(settings.gemini_chat_model)
 
+    @llm_retry
     def answer(self, prompt: str) -> str:
         return self._model.generate_content(prompt).text
 

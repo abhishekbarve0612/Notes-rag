@@ -3,6 +3,7 @@ import hashlib
 import numpy as np
 
 from app.config import Settings
+from app.utils.retry import llm_retry
 
 
 class LocalEmbedder:
@@ -12,6 +13,7 @@ class LocalEmbedder:
         self._model = SentenceTransformer(settings.local_embed_model)
         self.dim = self._model.get_embedding_dimension()
 
+    @llm_retry
     def embed(self, texts: list[str]) -> np.ndarray:
         v = self._model.encode(texts, convert_to_numpy=True, normalize_embeddings=True)
 
@@ -26,6 +28,7 @@ class OpenAIEmbedder:
         self._client = OpenAI(api_key=settings.openai_api_key)
         self._model, self.dim = settings.openai_embed_model, 1536
 
+    @llm_retry
     def embed(self, texts: list[str]) -> np.ndarray:
         r = self._client.embeddings.create(model=self._model, input=texts)
 
@@ -39,6 +42,7 @@ class GeminiEmbedder:
         genai.configure(api_key=settings.gemini_api_key)
         self._genai, self._model, self.dim = genai, settings.gemini_embed_model, 3072
 
+    @llm_retry
     def embed(self, texts: list[str]) -> np.ndarray:
         out = [
             self._genai.embed_content(
